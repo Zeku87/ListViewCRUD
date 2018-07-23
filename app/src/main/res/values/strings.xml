@@ -2,4 +2,9 @@
     <string name="app_name">ListViewCRUD</string>
 
     <string name="new_btn">Add</string>
+    <string name="update_btn">Update</string>
+    
+
+    <string name="title_dialog_fragment">Update List</string>
+    <string name="text_view_update">Update the current item</string>
 </resources>

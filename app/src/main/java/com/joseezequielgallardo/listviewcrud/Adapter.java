@@ -27,14 +27,13 @@ public class Adapter extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return items.get(i);
     }
 
     @Override
     public long getItemId(int i) {
         return 0;
     }
-
     @Override
     public View getView(int pos, View view, ViewGroup viewGroup) {
 
