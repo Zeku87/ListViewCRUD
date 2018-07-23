@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ListViewCRUD</string>
+
+    <string name="new_btn">Add</string>
+</resources>
