@@ -8,6 +8,31 @@
     tools:context=".MainActivity">
 
     <LinearLayout
+        android:id="@+id/delete_buttons_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/accept_delete_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="@string/accept_deletion"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/cancel_delete_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="@string/cancel"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/add_item_layout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,10 +43,11 @@
             android:id="@+id/item_edit_text"
             android:layout_weight="2"
             android:layout_width="0dp"
+            android:hint="@string/add_item_hint"
             android:layout_height="wrap_content" />
 
         <Button
-            android:id="@+id/new_btn"
+            android:id="@+id/add_item_button"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

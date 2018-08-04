@@ -7,4 +7,9 @@
 
     <string name="title_dialog_fragment">Update List</string>
     <string name="text_view_update">Update the current item</string>
+
+    <string name="add_item_hint">Add an item stuff</string>
+
+    <string name="accept_deletion">Delete</string>
+    <string name="cancel">Cancel</string>
 </resources>
