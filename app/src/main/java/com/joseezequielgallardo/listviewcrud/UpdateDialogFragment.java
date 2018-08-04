@@ -70,7 +70,14 @@ public class UpdateDialogFragment extends DialogFragment {
                 dismiss();
             }
         });
-
     }
 
+    @Override
+    public void onStart(){
+        super.onStart();
+
+        //Issue: Linear layout's width or height set to MATCH_PARENT does not work
+        getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+    }
 }
