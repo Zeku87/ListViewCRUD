@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Operaciones CRUD sobre listview</string>
+
     <string name="new_btn">Añadir</string>
     <string name="update_btn">Modificar</string>
+
     <string name="title_dialog_fragment">Modificar lista</string>
     <string name="text_view_update">Modificar elemento actual</string>
-    <string name="add_item_hint">Escribe algo</string>
+    <string name="add_item_hint">Descripción&#8230;</string>
+
     <string name="accept_deletion">Eliminar</string>
     <string name="cancel">Cancelar</string>
-    <string name="app_name">Operaciones CRUD sobre listview</string>
 </resources>
