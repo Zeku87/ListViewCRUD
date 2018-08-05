@@ -3,6 +3,7 @@ package com.joseezequielgallardo.listviewcrud;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -10,11 +11,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.joseezequielgallardo.listviewcrud.data.Item;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements UpdateDialogFragment.OnUpdateListener {
 
-    public ArrayList<String> items = new ArrayList<>();
+    public ArrayList<Item> items = new ArrayList<>();
     private Adapter adapter;
 
     LinearLayout deleteButtonsLayout, addItemLayout;
@@ -50,17 +53,28 @@ public class MainActivity extends AppCompatActivity implements UpdateDialogFragm
                 if(!item.isEmpty()){
                     String emptyString = "";
                     itemEditText.setText(emptyString);
-                    items.add(item);
+                    adapter.getItems().add(new Item(item));
                     adapter.notifyDataSetChanged();
-
+                    Log.d("LIST SIZE", "size = " + items.size());
                 }
             }
         });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                updateFragmentDialog(i);
+            public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
+                Log.d("POSITION CLICKED", "position: " + i);
+
+                //deletable mode behaviour on
+                if(adapter.isDeletableMode()){
+                    adapter.getItems().get(i).setChecked(!adapter.getItems().get(i).isChecked());
+                    adapter.notifyDataSetChanged();
+                }
+
+                //deletable mode behaviour off
+                if(!adapter.isDeletableMode()){
+                    updateFragmentDialog(i);
+                }
             }
         });
 
@@ -75,7 +89,17 @@ public class MainActivity extends AppCompatActivity implements UpdateDialogFragm
         acceptDeletionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO eliminate items selected
+                for(int i = adapter.getItems().size() - 1; i >= 0; --i){
+                    if(adapter.isPositionChecked(i))
+                    {
+                        adapter.getItems().remove(i);
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+                disableDeletionView();
+                adapter.disableDeletionMode();
+                adapter.notifyDataSetChanged();
+
             }
         });
 
@@ -83,6 +107,8 @@ public class MainActivity extends AppCompatActivity implements UpdateDialogFragm
             @Override
             public void onClick(View view) {
                 disableDeletionView();
+                adapter.disableDeletionMode();
+                adapter.notifyDataSetChanged();
             }
         });
     }
@@ -90,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements UpdateDialogFragm
     private void updateFragmentDialog(int i){
         FragmentManager manager = getSupportFragmentManager();
         UpdateDialogFragment dialogFragment = UpdateDialogFragment.newInstance(
-                items.get(i), i
+                items.get(i).getText(), i
         );
 
         dialogFragment.show(manager, getString(R.string.title_dialog_fragment));
@@ -99,20 +125,24 @@ public class MainActivity extends AppCompatActivity implements UpdateDialogFragm
     private void enableDeletionView(){
         deleteButtonsLayout.setVisibility(View.VISIBLE);
         addItemLayout.setVisibility(View.GONE);
-        adapter.setDeletable(true);
+        adapter.setDeletableMode(true);
         adapter.notifyDataSetChanged();
     }
+
 
     private void disableDeletionView(){
         deleteButtonsLayout.setVisibility(View.GONE);
         addItemLayout.setVisibility(View.VISIBLE);
-        adapter.setDeletable(false);
+        adapter.setDeletableMode(false);
         adapter.notifyDataSetChanged();
     }
 
+
     @Override
     public void onUpdate(String item, int position){
-        items.set(position, item);
-        adapter.notifyDataSetChanged();
+        if(!item.isEmpty()) {
+            items.set(position, new Item(item));
+            adapter.notifyDataSetChanged();
+        }
     }
 }
